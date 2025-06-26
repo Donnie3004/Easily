@@ -1,0 +1,22 @@
+{
+  "name": "easily",
+  "version": "1.0.0",
+  "description": "Job Portal Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run dev",
+    "dev": "nodemon index.js"
+  },
+  "author": "Arbaz",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1"
+  }
+}
