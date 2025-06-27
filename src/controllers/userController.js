@@ -21,11 +21,12 @@ export default class UserController {
     if(Errors.length > 0){
       return res.render('404');
     }
-    let obj = UserModel.getUserByMail(email, password);
+    let obj = UserModel.getUserByMailAndPassword(email, password);
     if(obj){
       const user = {
         name:obj.name
       }
+      req.session.email = email;
       return res.render('landing-page', {user:user});
     }
   }
@@ -57,6 +58,16 @@ export default class UserController {
     if(user_created){
       res.render('user-login');
     }
+  }
+
+  userLogout(req, res){
+    req.session.destroy((err)=>{
+      if(err){
+        console.log(err);
+      }else{
+        res.redirect('/')
+      }
+    })
   }
 
 }

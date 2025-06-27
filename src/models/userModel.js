@@ -6,10 +6,19 @@ export default class UserModel { // this is a recruiter...!
     this.password = _password;
   }
 
-  static getUserByMail(_email, _password){
+  static getUserByMailAndPassword(_email, _password){
     for(let i=0;i<USERS.length;i++){
       if(USERS[i].email === _email && USERS[i].password === _password){
         return USERS[i];
+      }
+    }
+    return false;
+  }
+
+  static getUserFromEmail(_email){
+    for(const user of USERS){
+      if(user.email === _email){
+        return user;
       }
     }
     return false;

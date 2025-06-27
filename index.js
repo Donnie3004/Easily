@@ -34,12 +34,11 @@ app.use(
 );
 
 app.use('/', (req, res, next)=>{
+  console.log(req.session.email);
   if(req.session.email){
-    let user = UserModel.getUserByMail(req.session.email);
-    console.log(user);
-    // UserModel.getUserFromEmail(req.session.email);
-    // res.locals.user = user;
-    // req.user = user;
+    let user = UserModel.getUserFromEmail(req.session.email);
+    res.locals.user = user;
+    req.user = user;
   }else {
     req.user = null;
   }
@@ -52,29 +51,15 @@ app.get("/", UserController.getLandingPage);
 app.get("/login", UserController.renderLoginPage);
 app.post("/login", UserController.loginVerification);
 app.post("/register", UserController.creatingNewUser);
+app.get("/logout", UserController.userLogout);
 
 
 
 const JobController = new jobController();
 app.get("/jobs", JobController.getAllJobs);
 app.get("/jobs/:id", JobController.getJobFullDetails);
-
-
-
-app.get('/test', (req, res)=>{
-  
-  // if(!req.session.view){
-  //   req.session.view = 1;
-  // }
-  // req.session.view++;
-  // console.log('view : ', req.session.view);
-  res.send("Okay");
-  //res.cookie("name", "Arbaz", {maxAge:5000}); // setting the cookie..!
-  //console.log("Cookies : ", req.cookies);
-  //res.clearCookie('name'); // to clear a cookie from sever..!
-  //return res.send("Cookies displayed : ", req.cookies);
-})
-
+app.get("/postjob", JobController.postJobPage);
+app.post("/job", JobController.newJobData);
 
 
 app.listen(port,(err)=>{

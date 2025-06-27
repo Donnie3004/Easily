@@ -29,6 +29,27 @@ export default class JobModel{
     }
   }
 
+  static newJobPosting(obj){
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = today.getFullYear();
+    const finalDate =  `${day}/${month}/${year}`;
+    
+    try {
+      const new_job = new JOBS(JOBS.length + 1, obj.job_category, obj.job_designation, obj.job_location, obj.company_name, obj.salary, obj.applyBy, obj.skills_required, obj.number_of_openings, finalDate,0, obj.employees, obj.experience);
+
+      JOBS.push(new_job);
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+
+    
+  }
+
 }
 
 
