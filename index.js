@@ -7,12 +7,16 @@ import userController from './src/controllers/UserController.js';
 import jobController from './src/controllers/jobsController.js';
 import UserModel from './src/models/userModel.js';
 import uploadfile from './src/middlewares/uploadFile.js';
+import applicantController from './src/controllers/applicantController.js';
+import uploadResume from './src/middlewares/uploadResume.js';
+
 
 
 const app = express();
 const port = 8000;
 
 app.use(express.static('public'));
+//app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());  
 
@@ -61,13 +65,13 @@ app.get("/jobs", JobController.getAllJobs);
 app.get("/jobs/:id", JobController.getJobFullDetails);
 app.get("/postjob", JobController.postJobPage);
 app.post("/jobs", uploadfile.single('logo'),JobController.newJobData);
-
-
 app.get("/job/update/:id", JobController.updatePage);
 app.post("/job/update/:id", uploadfile.single('logo'), JobController.updatePageSave);
-
-
 app.get('/job/delete/:id', JobController.deleteJobByID);
+
+const ApplicantController = new applicantController();
+app.post('/apply/:id', uploadResume.single('resume'), ApplicantController.registerForJob);
+app.get("/job/applicants/:id", ApplicantController.getApplicantPage);
 
 app.listen(port,(err)=>{
   if(err){

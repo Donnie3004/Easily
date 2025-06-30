@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 export default class JobModel{
   constructor(_id, _jobCategory, _jobDesignation, _jobLocation, _companyName, _salary, _applyBy, _skillsRequired, _noo, _jobPosted, _applicants, _employees, _experience, _company_founded, _logo){
     this.id = _id;
@@ -8,9 +6,9 @@ export default class JobModel{
     this.job_location = _jobLocation;
     this.company_name = _companyName;
     this.salary = _salary;
-    this.applyBy = _applyBy;
+    this.apply_by = _applyBy;
     this.skills_required = _skillsRequired;
-    this.noo = _noo;
+    this.number_of_openings = _noo;
     this.job_posted = _jobPosted;
     this.applicants = _applicants;
     this.employees = _employees;
@@ -86,10 +84,22 @@ export default class JobModel{
     }
   }
 
+  static increaseApplicant(_id, obj){
+    try {
+      const foundObject = JOBS.find(item => item.id === Number(_id));
+      foundObject.applicants.push(obj)
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+    
+  }
+
 }
 var JOBS = [
-  new JobModel(1,"technical", "Senior frontend developer", "Gurgaon", "Google", 20, "19/5/2025", ["REACT", "Node js"], 5, "1/1/2025", 0, 190000, "0-2 years"),
-  new JobModel(2,"technical", "Senior backend developer", "bangalore", "Amazon", 20, "19/5/2025", ["REACT", "Node js"], 10, "1/1/2025", 0, 200000, "4-5 years"),
+  new JobModel(1,"technical", "Senior frontend developer", "Gurgaon", "Google", "20 LPA", "19/5/2025", ["REACT", "Node js"], 5, "1/1/2025", [], 190000, "0-2 years", "1999", "http://localhost:8000/public/logos/google.webp"),
+  new JobModel(2,"technical", "Senior backend developer", "bangalore", "Amazon", 20, "19/5/2025", ["REACT", "Node js"], 10, "1/1/2025", [], 200000, "4-5 years", "2001", ""),
 ]
 
 
