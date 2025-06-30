@@ -6,6 +6,7 @@ import session from 'express-session';
 import userController from './src/controllers/UserController.js';
 import jobController from './src/controllers/jobsController.js';
 import UserModel from './src/models/userModel.js';
+import uploadfile from './src/middlewares/uploadFile.js';
 
 
 const app = express();
@@ -28,7 +29,7 @@ app.use(
     resave:false,
     saveUninitialized:true,// 
     cookie:{
-      maxAge:1000*60, //10 mins
+      maxAge:1000*60*60*60, //10 mins
     }
   })
 );
@@ -59,8 +60,14 @@ const JobController = new jobController();
 app.get("/jobs", JobController.getAllJobs);
 app.get("/jobs/:id", JobController.getJobFullDetails);
 app.get("/postjob", JobController.postJobPage);
-app.post("/job", JobController.newJobData);
+app.post("/jobs", uploadfile.single('logo'),JobController.newJobData);
 
+
+app.get("/job/update/:id", JobController.updatePage);
+app.post("/job/update/:id", uploadfile.single('logo'), JobController.updatePageSave);
+
+
+app.get('/job/delete/:id', JobController.deleteJobByID);
 
 app.listen(port,(err)=>{
   if(err){

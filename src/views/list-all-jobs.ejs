@@ -131,7 +131,7 @@
             <span class="easy-apply-badge">Easy Apply</span>
           </div>
           <div class="skills">
-            <% job.skills_required.forEach(function(skill){ %>
+            <% job.skills_required.map(function(skill){ %>
               <span class="skill"><%= skill %></span>
             <% }); %>
           </div>

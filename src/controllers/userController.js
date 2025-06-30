@@ -1,6 +1,5 @@
 import UserModel from "../models/userModel.js";
 
-
 import validator from 'validator';
 
 export default class UserController { 
